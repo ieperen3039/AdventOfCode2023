@@ -1,1 +1,6 @@
 /target
+/.idea/advent_of_code_2023.iml
+/Cargo.lock
+/.idea/modules.xml
+/inputs/*
+/.idea/vcs.xml
