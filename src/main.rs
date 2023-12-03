@@ -1,5 +1,6 @@
 #[allow(dead_code)]
 pub mod trebuchet;
+mod cubes;
 
 use std::path::PathBuf;
 
@@ -23,8 +24,8 @@ struct CommandlineArguments {
 fn main() {
     // let args = CommandlineArguments::parse();
     let args = CommandlineArguments {
-        day: 1,
-        input: PathBuf::from("inputs/trebuchet.txt"),
+        day: 2,
+        input: PathBuf::from("inputs/cubes.txt"),
         output: None,
     };
 
@@ -49,6 +50,10 @@ fn main() {
     match args.day {
         1 => {
             let value = trebuchet::decode_calibration(input_text);
+            println!("{value}");
+        },
+        2 => {
+            let value = cubes::filter_games(input_text);
             println!("{value}");
         },
         _ => panic!("day {} not defined", args.day)

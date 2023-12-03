@@ -2,12 +2,12 @@ const NUMBERS: &[&str] = &[
     "zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine"
 ];
 
-pub fn decode_calibration(input: String) -> u32 {
-    let split = input.split("\n");
+pub fn decode_calibration(input_text: String) -> u32 {
+    let split = input_text.split("\r\n");
     let mut total = 0;
 
     for line in split {
-        let line_str = line.to_string().clone();
+        if line.is_empty() { continue; }
 
         let mut first = 0;
         for char_idx in 0..line.len() {
@@ -28,7 +28,7 @@ pub fn decode_calibration(input: String) -> u32 {
                 break;
             }
         }
-        println!("{first}, {second} : {line_str}");
+        println!("{line}: {first}, {second}");
 
         total += (first * 10) + second;
     }
