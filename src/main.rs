@@ -1,6 +1,7 @@
 #[allow(dead_code)]
 pub mod trebuchet;
 mod cubes;
+pub mod gears;
 
 use std::path::PathBuf;
 
@@ -16,17 +17,13 @@ struct CommandlineArguments {
     /// input file
     #[arg(short, long)]
     input: PathBuf,
-    /// output file
-    #[arg(short, long)]
-    output: Option<PathBuf>,
 }
 
 fn main() {
     // let args = CommandlineArguments::parse();
     let args = CommandlineArguments {
-        day: 2,
-        input: PathBuf::from("inputs/cubes.txt"),
-        output: None,
+        day: 3,
+        input: PathBuf::from("inputs/gears.txt")
     };
 
     let input_text = {
@@ -38,15 +35,6 @@ fn main() {
         }
     };
 
-    let output_file = args.output.map(|output|{
-        let file_contents = std::fs::File::create(&output);
-        if file_contents.is_err() {
-            panic!("File {} can not be opened", output.display())
-        } else {
-            file_contents.unwrap()
-        }
-    });
-
     match args.day {
         1 => {
             let value = trebuchet::decode_calibration(input_text);
@@ -54,6 +42,10 @@ fn main() {
         },
         2 => {
             let value = cubes::filter_games(input_text);
+            println!("{value}");
+        },
+        3 => {
+            let value = gears::part_2_find_gear_ratios(input_text);
             println!("{value}");
         },
         _ => panic!("day {} not defined", args.day)
