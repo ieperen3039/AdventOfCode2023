@@ -1,7 +1,7 @@
 pub fn filter_games(input_text: String) -> u32 {
     let mut total = 0;
 
-    let split = input_text.split("\r\n");
+    let split = input_text.lines();
     let mut game_number = 0;
     for line in split {
         if line.is_empty() { continue; }

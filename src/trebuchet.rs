@@ -3,7 +3,7 @@ const NUMBERS: &[&str] = &[
 ];
 
 pub fn decode_calibration(input_text: String) -> u32 {
-    let split = input_text.split("\r\n");
+    let split = input_text.lines();
     let mut total = 0;
 
     for line in split {
