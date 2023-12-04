@@ -1,6 +1,6 @@
 use std::{
     cmp,
-    collections::{hash_map, HashMap},
+    collections::HashMap,
 };
 
 pub fn part_1_find_engine_parts(input: String) -> u32 {
@@ -123,6 +123,41 @@ pub fn part_2_find_gear_ratios(input: String) -> u32 {
     }
 
     gears
+        .values()
+        .filter(|vec| vec.len() == 2)
+        .map(|v| v[0] * v[1])
+        .fold(0, |a, b| a + b)
+}
+
+pub fn part_2_flex_on_jdengi(input: String) -> u32 {
+    let rows: Vec<&str> = input.lines().filter(|&l| !l.is_empty()).collect();
+    let character_matrix: Vec<Vec<char>> = rows.iter().map(|l| l.chars().collect()).collect();
+
+    let line_len = rows[0].len();
+
+    (0..rows.len())
+        .flat_map(|l_idx| (0..line_len).map(move |c_idx| (l_idx, c_idx)))
+        .filter(|(l_idx, c_idx)| character_matrix[*l_idx][*c_idx].is_ascii_digit())
+        .filter(|(l_idx, c_idx)| *c_idx == 0 || !character_matrix[*l_idx][c_idx - 1].is_ascii_digit())
+        .map(|(l_idx, c_idx)| {
+            let number_end = c_idx + numeric_len(&character_matrix[l_idx][c_idx..]) - 1;
+            let number_value: u32 = (&rows[l_idx][c_idx..=number_end]).parse().unwrap();
+            let c_min = c_idx.checked_sub(1).unwrap_or(0);
+            let c_max = cmp::min(number_end + 1, line_len - 1);
+            let l_min = l_idx.checked_sub(1).unwrap_or(0);
+            let l_max = cmp::min(l_idx + 1, rows.len() - 1);
+            (l_min, l_max, c_min, c_max, number_value)
+        })
+        .flat_map(|(l_min, l_max, c_min, c_max, n)| {
+            (l_min..=l_max)
+                .flat_map(move |l_idx| (c_min..=c_max).map(move |c_idx| (l_idx, c_idx, n)))
+        })
+        .filter(|(l, c, _)| is_gear(character_matrix[*l][*c]))
+        .fold(HashMap::new(), |mut g, (l, c, n)| {
+            g.entry((l, c)).or_insert(Vec::new()).push(n);
+            println!("{n:>5} for position ({l:3},{c:3}) |");
+            g
+        })
         .values()
         .filter(|vec| vec.len() == 2)
         .map(|v| v[0] * v[1])

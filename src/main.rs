@@ -45,7 +45,7 @@ fn main() {
             println!("{value}");
         },
         3 => {
-            let value = gears::part_2_find_gear_ratios(input_text);
+            let value = gears::part_2_flex_on_jdengi(input_text);
             println!("{value}");
         },
         _ => panic!("day {} not defined", args.day)
