@@ -2,6 +2,7 @@
 pub mod trebuchet;
 mod cubes;
 pub mod gears;
+pub mod scratchcards;
 
 use std::path::PathBuf;
 
@@ -22,8 +23,8 @@ struct CommandlineArguments {
 fn main() {
     // let args = CommandlineArguments::parse();
     let args = CommandlineArguments {
-        day: 3,
-        input: PathBuf::from("inputs/gears.txt")
+        day: 4,
+        input: PathBuf::from("inputs/scratchcards.txt")
     };
 
     let input_text = {
@@ -45,7 +46,11 @@ fn main() {
             println!("{value}");
         },
         3 => {
-            let value = gears::part_2_flex_on_jdengi(input_text);
+            let value = gears::part_2_find_gear_ratios(input_text);
+            println!("{value}");
+        },
+        4 => {
+            let value = scratchcards::part_2_get_total_scratchcards(input_text);
             println!("{value}");
         },
         _ => panic!("day {} not defined", args.day)
