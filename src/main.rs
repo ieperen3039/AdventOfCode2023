@@ -1,8 +1,9 @@
 #[allow(dead_code)]
-pub mod trebuchet;
+mod trebuchet;
 mod cubes;
-pub mod gears;
-pub mod scratchcards;
+mod gears;
+mod scratchcards;
+mod seeds;
 
 use std::path::PathBuf;
 
@@ -23,8 +24,8 @@ struct CommandlineArguments {
 fn main() {
     // let args = CommandlineArguments::parse();
     let args = CommandlineArguments {
-        day: 4,
-        input: PathBuf::from("inputs/scratchcards.txt")
+        day: 5,
+        input: PathBuf::from("inputs/seeds.txt")
     };
 
     let input_text = {
@@ -51,6 +52,10 @@ fn main() {
         },
         4 => {
             let value = scratchcards::part_2_get_total_scratchcards(input_text);
+            println!("{value}");
+        },
+        5 => {
+            let value = seeds::part_1_calculate_seed_locations(input_text);
             println!("{value}");
         },
         _ => panic!("day {} not defined", args.day)
