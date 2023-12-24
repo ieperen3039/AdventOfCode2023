@@ -55,7 +55,7 @@ fn main() {
             println!("{value}");
         },
         5 => {
-            let value = seeds::part_1_calculate_seed_locations(input_text);
+            let value = seeds::part_2_calculate_range_mapping(input_text);
             println!("{value}");
         },
         _ => panic!("day {} not defined", args.day)
